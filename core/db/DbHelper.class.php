@@ -31,7 +31,7 @@ class DbHelper
         }
     }
 
-    static public function getInstance($config){
+    static public function getInstance($config = null){
         if(null == self::$instance){
             self::$instance =  new self($config);
         }
@@ -41,6 +41,10 @@ class DbHelper
     private function __clone()
     {
         // TODO: Implement __clone() method.
+    }
+
+    public function close(){
+        $this->pdo = null;
     }
 
 

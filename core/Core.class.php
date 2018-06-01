@@ -9,6 +9,7 @@
 namespace Core;
 
 use config\Config;
+use core\db\DbHelper;
 use core\log\Log;
 
 class Core
@@ -30,6 +31,15 @@ class Core
          * 初始化日志类
          */
         Log::init(LOG_PATH,Config::get("ENABLE_LOG"));
+        /*
+         * 初始化数据库类
+         */
+        $dbh = DbHelper::getInstance(['host'=>Config::get("DB_HOST"),'port'=>Config::get("DB_PORT"),'dbname'=>Config::get("DB_NAME"),
+            'username'=>Config::get("DB_USER"),'password'=>Config::get("DB_PWD")]);
+
+        register_shutdown_function(function(){
+            DbHelper::getInstance()->close();
+        });
 
     }
 
