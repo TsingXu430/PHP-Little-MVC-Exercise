@@ -7,11 +7,11 @@
  */
 
 return [
-    'DB_HOST'=>'192.168.1.36',
+    'DB_HOST'=>'127.0.0.1',
     'DB_PORT'=>'3306',
     'DB_NAME'=>'edulive',
     'DB_USER'=>'root',
-    'DB_PWD'=>'tb1003',
+    'DB_PWD'=>'',
 
     'ENABLE_LOG'=>true,
 ];

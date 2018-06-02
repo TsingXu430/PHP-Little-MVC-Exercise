@@ -11,6 +11,7 @@ namespace Core;
 use config\Config;
 use core\db\DbHelper;
 use core\log\Log;
+use service\courseService;
 
 class Core
 {
@@ -34,7 +35,7 @@ class Core
         /*
          * 初始化数据库类
          */
-        $dbh = DbHelper::getInstance(['host'=>Config::get("DB_HOST"),'port'=>Config::get("DB_PORT"),'dbname'=>Config::get("DB_NAME"),
+        DbHelper::getInstance(['host'=>Config::get("DB_HOST"),'port'=>Config::get("DB_PORT"),'dbname'=>Config::get("DB_NAME"),
             'username'=>Config::get("DB_USER"),'password'=>Config::get("DB_PWD")]);
 
         register_shutdown_function(function(){
@@ -45,10 +46,15 @@ class Core
 
     static public function start(){
 
+        Log::write("启动定时任务",Log::LOG_LEVEL_INFO);
+        $courseService = new courseService();
+        $courseService -> schedule();
+
     }
 
     static public function autoload(){
         spl_autoload_register(function($className){
+            $className = str_replace('\\', '/', $className);
             require_once APP_PATH.DIRECTORY_SEPARATOR.$className.".class.php";
         });
     }

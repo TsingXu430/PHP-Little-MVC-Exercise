@@ -48,5 +48,21 @@ class DbHelper
     }
 
 
+    public function query($sql,$queryMode = 'ALL'){
+        $recordset = $this->pdo->query($sql);
+        if($recordset){
+            $recordset->setFetchMode(\PDO::FETCH_NUM);
+            if($queryMode == 'ALL'){
+                $result = $recordset->fetchAll();
+            }else{
+                $result = $recordset->fetch();
+            }
+        }else{
+            $result = null;
+        }
+
+        return $result;
+    }
+
 
 }
